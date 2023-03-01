@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Pantelwar/binarytree"
-	"github.com/Pantelwar/matching-engine/util"
+	"github.com/moretouch/matching-engine/util"
 )
 
 var decimalZero, _ = util.NewDecimalFromString("0.0")
@@ -58,8 +58,8 @@ func (ob *OrderBook) commonProcess(order Order, tree *binarytree.BinaryTree, add
 		// var t []Trade
 		var ordersProcessed []*Order
 		noMoreOrders, ordersProcessed, partialOrder = ob.processLimit(&order, partialOrder, maxNode.Data.(*OrderType).Tree, orderOriginalAmount) //, orderPrice)
-		fmt.Printf("\npartialOrder in between: %#v\n", partialOrder)
-		fmt.Printf("noMoreOrders: %#v\n\n", noMoreOrders)
+		//fmt.Printf("\npartialOrder in between: %#v\n", partialOrder)
+		//fmt.Printf("noMoreOrders: %#v\n\n", noMoreOrders)
 		allOrdersProcessed = append(allOrdersProcessed, ordersProcessed...)
 		// trades = append(trades, t...)
 
@@ -76,7 +76,7 @@ func (ob *OrderBook) commonProcess(order Order, tree *binarytree.BinaryTree, add
 	// if partialOrder.Amount == nil {
 	// 	partialOrder = nil
 	// }
-	fmt.Printf("partialOrder final: %#v\n", partialOrder)
+	// fmt.Printf("partialOrder final: %#v\n", partialOrder)
 
 	return allOrdersProcessed, partialOrder
 }
@@ -92,7 +92,7 @@ func (ob *OrderBook) processLimit(order, partialOrder *Order, tree *binarytree.B
 	noMoreOrders := false
 	var ordersProcessed []*Order
 	// var partialOrder *Order
-	fmt.Printf("partialOrder start: %#v\n", partialOrder)
+	// fmt.Printf("partialOrder start: %#v\n", partialOrder)
 
 	// var partialOrder *Order
 	if maxNode == nil {

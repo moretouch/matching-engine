@@ -4,6 +4,6 @@ Improved matching engine written in Go (Golang)
 
 ## Installation
 
-```javascript
-go get github.com/Pantelwar/matching-engine/engine
+```shell
+go get github.com/moretouch/matching-engine/engine
 ```

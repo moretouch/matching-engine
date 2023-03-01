@@ -9,7 +9,7 @@ import (
 	"sync"
 
 	"github.com/Pantelwar/binarytree"
-	"github.com/Pantelwar/matching-engine/util"
+	"github.com/moretouch/matching-engine/util"
 )
 
 // OrderBook type
@@ -142,6 +142,20 @@ func (ob *OrderBook) GetOrders(limit int64) *BookArray {
 		Buys:  buys,
 		Sells: sells,
 	}
+}
+
+// GetOrder returns order by orderID
+func (ob *OrderBook) GetOrder(orderID string) *Order {
+	orderNode := ob.orders[orderID]
+	if orderNode == nil {
+		return nil
+	}
+	for _, order := range orderNode.Orders {
+		if order.ID == orderID {
+			return order
+		}
+	}
+	return nil
 }
 
 // String implements Stringer interface

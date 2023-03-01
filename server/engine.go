@@ -6,9 +6,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Pantelwar/matching-engine/engine"
-	engineGrpc "github.com/Pantelwar/matching-engine/engineGrpc"
-	"github.com/Pantelwar/matching-engine/util"
+	"github.com/moretouch/matching-engine/engine"
+	engineGrpc "github.com/moretouch/matching-engine/engineGrpc"
+	"github.com/moretouch/matching-engine/util"
 )
 
 // Engine ...
@@ -28,20 +28,20 @@ func (e *Engine) Process(ctx context.Context, req *engineGrpc.Order) (*engineGrp
 
 	var order engine.Order
 	// decode the message
-	fmt.Println("Orderstring =: ", orderString)
+	// fmt.Println("Orderstring =: ", orderString)
 	err := order.FromJSON([]byte(orderString))
 	if err != nil {
-		fmt.Println("JSON Parse Error =: ", err)
+		// fmt.Println("JSON Parse Error =: ", err)
 		return nil, err
 	}
 
 	if order.Amount.Cmp(bigZero) == 0 || order.Price.Cmp(bigZero) == 0 {
-		fmt.Println("Invalid JSON")
+		// fmt.Println("Invalid JSON")
 		return nil, errors.New("Invalid JSON")
 	}
 
 	if req.GetPair() == "" {
-		fmt.Println("Invalid pair")
+		// fmt.Println("Invalid pair")
 		return nil, errors.New("Invalid pair")
 	}
 
@@ -58,12 +58,12 @@ func (e *Engine) Process(ctx context.Context, req *engineGrpc.Order) (*engineGrp
 	ordersProcessedString, err := json.Marshal(ordersProcessed)
 
 	// if order.Type.String() == "sell" {
-	fmt.Println("pair:", req.GetPair())
-	fmt.Println(pairBook)
+	// fmt.Println("pair:", req.GetPair())
+	// fmt.Println(pairBook)
 	// }
 
 	if err != nil {
-		fmt.Println("Marshal error", err)
+		// fmt.Println("Marshal error", err)
 		return nil, err
 	}
 
@@ -71,7 +71,7 @@ func (e *Engine) Process(ctx context.Context, req *engineGrpc.Order) (*engineGrp
 		var partialOrderString []byte
 		partialOrderString, err = json.Marshal(partialOrder)
 		if err != nil {
-			fmt.Println("partialOrderString Marshal error", err)
+			// fmt.Println("partialOrderString Marshal error", err)
 			return nil, err
 		}
 		return &engineGrpc.OutputOrders{OrdersProcessed: string(ordersProcessedString), PartialOrder: string(partialOrderString)}, nil
@@ -84,12 +84,12 @@ func (e *Engine) Cancel(ctx context.Context, req *engineGrpc.Order) (*engineGrpc
 	order := &engine.Order{ID: req.GetID()}
 
 	if order.ID == "" {
-		fmt.Println("Invalid JSON")
+		// fmt.Println("Invalid JSON")
 		return nil, errors.New("Invalid JSON")
 	}
 
 	if req.GetPair() == "" {
-		fmt.Println("Invalid pair")
+		// fmt.Println("Invalid pair")
 		return nil, errors.New("Invalid pair")
 	}
 
@@ -103,8 +103,8 @@ func (e *Engine) Cancel(ctx context.Context, req *engineGrpc.Order) (*engineGrpc
 
 	order = pairBook.CancelOrder(order.ID)
 
-	fmt.Println("pair:", req.GetPair())
-	fmt.Println(pairBook)
+	// fmt.Println("pair:", req.GetPair())
+	// fmt.Println(pairBook)
 
 	if order == nil {
 		return nil, errors.New("NoOrderPresent")
@@ -130,17 +130,17 @@ func (e *Engine) ProcessMarket(ctx context.Context, req *engineGrpc.Order) (*eng
 	// fmt.Println("Orderstring =: ", orderString)
 	err := order.FromJSON([]byte(orderString))
 	if err != nil {
-		fmt.Println("JSON Parse Error =: ", err)
+		// fmt.Println("JSON Parse Error =: ", err)
 		return nil, err
 	}
 
 	if order.Amount.Cmp(bigZero) == 0 {
-		fmt.Println("Invalid JSON")
+		// fmt.Println("Invalid JSON")
 		return nil, errors.New("Invalid JSON")
 	}
 
 	if req.GetPair() == "" {
-		fmt.Println("Invalid pair")
+		// fmt.Println("Invalid pair")
 		return nil, errors.New("Invalid pair")
 	}
 
@@ -157,8 +157,8 @@ func (e *Engine) ProcessMarket(ctx context.Context, req *engineGrpc.Order) (*eng
 	ordersProcessedString, err := json.Marshal(ordersProcessed)
 
 	// if order.Type.String() == "sell" {
-	fmt.Println("pair:", req.GetPair())
-	fmt.Println(pairBook)
+	// fmt.Println("pair:", req.GetPair())
+	// fmt.Println(pairBook)
 	// }
 
 	if err != nil {
@@ -176,7 +176,7 @@ func (e *Engine) ProcessMarket(ctx context.Context, req *engineGrpc.Order) (*eng
 // FetchBook implements EngineServer interface
 func (e *Engine) FetchBook(ctx context.Context, req *engineGrpc.BookInput) (*engineGrpc.BookOutput, error) {
 	if req.GetPair() == "" {
-		fmt.Println("Invalid pair")
+		// fmt.Println("Invalid pair")
 		return nil, errors.New("Invalid pair")
 	}
 
@@ -187,7 +187,7 @@ func (e *Engine) FetchBook(ctx context.Context, req *engineGrpc.BookInput) (*eng
 		return nil, errors.New("Invalid pair")
 	}
 
-	fmt.Println(pairBook)
+	// fmt.Println(pairBook)
 	book := pairBook.GetOrders(req.GetLimit())
 
 	result := &engineGrpc.BookOutput{Buys: []*engineGrpc.BookArray{}, Sells: []*engineGrpc.BookArray{}}
@@ -197,13 +197,13 @@ func (e *Engine) FetchBook(ctx context.Context, req *engineGrpc.BookInput) (*eng
 
 		bodyBytes, err := json.Marshal(buy)
 		if err != nil {
-			fmt.Println("1", err)
+			// fmt.Println("1", err)
 			return &engineGrpc.BookOutput{Buys: []*engineGrpc.BookArray{}, Sells: []*engineGrpc.BookArray{}}, nil
 		}
 
 		err = json.Unmarshal(bodyBytes, &arr.PriceAmount)
 		if err != nil {
-			fmt.Println("2", err)
+			// fmt.Println("2", err)
 			return &engineGrpc.BookOutput{Buys: []*engineGrpc.BookArray{}, Sells: []*engineGrpc.BookArray{}}, nil
 		}
 
@@ -215,13 +215,13 @@ func (e *Engine) FetchBook(ctx context.Context, req *engineGrpc.BookInput) (*eng
 
 		bodyBytes, err := json.Marshal(sell)
 		if err != nil {
-			fmt.Println("json.Marshal Error", err)
+			// fmt.Println("json.Marshal Error", err)
 			return &engineGrpc.BookOutput{Buys: []*engineGrpc.BookArray{}, Sells: []*engineGrpc.BookArray{}}, nil
 		}
 
 		err = json.Unmarshal(bodyBytes, &arr.PriceAmount)
 		if err != nil {
-			fmt.Println("json.Unmarshal Error", err)
+			// fmt.Println("json.Unmarshal Error", err)
 			return &engineGrpc.BookOutput{Buys: []*engineGrpc.BookArray{}, Sells: []*engineGrpc.BookArray{}}, nil
 		}
 

@@ -14,8 +14,8 @@ func TestToJSON(t *testing.T) {
 		input  *Order
 		output string
 	}{
-		{NewOrder("b1", Buy, DecimalBig("5.0"), DecimalBig("7000.0")), `{"type":"buy","id":"b1","amount":"5.0","price":"7000.0"}`},
-		{NewOrder("s1", Sell, DecimalBig("5.0"), DecimalBig("7000.0")), `{"type":"sell","id":"s1","amount":"5.0","price":"7000.0"}`},
+		{NewOrder("b1", Buy, DecimalBig("5.3"), DecimalBig("7000.1")), `{"type":"buy","id":"b1","amount":"5.3","price":"7000.1"}`},
+		{NewOrder("s1", Sell, DecimalBig("5.3"), DecimalBig("7000.1")), `{"type":"sell","id":"s1","amount":"5.3","price":"7000.1"}`},
 	}
 
 	for _, tt := range tests {
