@@ -1,8 +1,6 @@
 package engine
 
 import (
-	"fmt"
-
 	"github.com/Pantelwar/binarytree"
 	"github.com/moretouch/matching-engine/util"
 )
@@ -118,14 +116,14 @@ func (ob *OrderBook) processLimit(order, partialOrder *Order, tree *binarytree.B
 		}
 		if order.Type == Sell {
 			if orderPrice > maxNode.Key {
-				fmt.Println("adding sellnode directly")
+				//fmt.Println("adding sellnode directly")
 				noMoreOrders = true
 				// return trades, noMoreOrders, nil, nil
 				return noMoreOrders, ordersProcessed, partialOrder
 			}
 		} else {
 			if orderPrice < maxNode.Key {
-				fmt.Println("adding buynode directly")
+				// fmt.Println("adding buynode directly")
 				noMoreOrders = true
 				// return trades, noMoreOrders, nil, nil
 				return noMoreOrders, ordersProcessed, partialOrder

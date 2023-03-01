@@ -63,7 +63,7 @@ func (order *Order) UnmarshalJSON(data []byte) error {
 	}{}
 
 	if err := json.Unmarshal(data, &obj); err != nil {
-		fmt.Println("Damn errr", err)
+		// fmt.Println("Damn errr", err)
 		return err
 	}
 
@@ -77,7 +77,7 @@ func (order *Order) UnmarshalJSON(data []byte) error {
 	var err error
 	order.Price, err = util.NewDecimalFromString(obj.Price) //.Quantize(8)
 	if err != nil {
-		fmt.Println("price", order.Price, err.Error())
+		// fmt.Println("price", order.Price, err.Error())
 		return errors.New("invalid order price")
 	}
 	order.Amount, err = util.NewDecimalFromString(obj.Amount) //.Quantize(8)

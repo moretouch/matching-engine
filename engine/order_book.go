@@ -3,7 +3,6 @@ package engine
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"math"
 	"strconv"
 	"sync"
@@ -336,7 +335,7 @@ func (ob *OrderBook) removeOrder(order *Order) error {
 		subTree := node.Data.(*OrderType)
 		subTreeNode := subTree.Tree.Root.SearchSubTree(orderPrice)
 		if subTreeNode != nil {
-			fmt.Println("Found node to remove")
+			// fmt.Println("Found node to remove")
 			// subTreeNode.Data.(*OrderNode).updateVolume(-order.Amount)
 			// subTreeNode.Data.(*OrderNode).Orders = append(subTreeNode.Data.(*OrderNode).Orders[:index], subTreeNode.Data.(*OrderNode).Orders[index+1:]...)
 			// if len(subTreeNode.Data.(*OrderNode).Orders) == 0 {
